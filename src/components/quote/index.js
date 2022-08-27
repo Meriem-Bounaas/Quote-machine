@@ -1,6 +1,7 @@
 // import { useSelector, useDispatch } from 'react-redux'
 // import {randomQuote} from './slices'
 import {useState} from 'react'
+import { FaTwitter } from 'react-icons/fa';
 
 const Quote = () =>{
 const [Quote, setQuote]=useState('')
@@ -26,7 +27,7 @@ const [Quote, setQuote]=useState('')
                     >
                         new quote
                     </button>
-                    <a id="tweet-quote" href='www.twitter.com/intent/tweet' target="_blank"><i class="fa fa-twitter" /></a>
+                    <a id="tweet-quote" href='www.twitter.com/intent/tweet' target="_blank"><FaTwitter/></a>
                 </div>
             </div>
             <div className='footer'>
