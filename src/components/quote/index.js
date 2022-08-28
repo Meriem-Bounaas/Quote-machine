@@ -1,40 +1,57 @@
-// import { useSelector, useDispatch } from 'react-redux'
-// import {randomQuote} from './slices'
-import {useState} from 'react'
-import { FaTwitter } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux'
+import {fetchQuote} from './slices'
+import { FaTwitter, FaQuoteLeft } from 'react-icons/fa';
+import { useEffect } from 'react';
+import Loading from '../loading';
 
 const Quote = () =>{
-const [Quote, setQuote]=useState('')
-// const quote = useSelector(state => state.quote.value)
-// const dispatch = useDispatch()
+    const quote = useSelector(state => state.quote.value)
+    const quoteStatus = useSelector(state => state.quote.status)
+    const quoteError = useSelector(state => state.quote.error)
 
+    const dispatch = useDispatch()
 
-    async function randomQuote(){
-        const response = await fetch('https://breaking-bad-quotes.herokuapp.com/v1/quotes')
-        const data = await response.json()
-        setQuote(data[0])
-    }
+    useEffect(()=>{
+            dispatch(fetchQuote()) 
+    },[dispatch])
 
+    if(quoteError)
+        return <h1>{quoteError}</h1>
 
     return(
         <>
             <div id='quote-box'>
-                <div id="text">{Quote.quote}</div>
-                <div id="author">-{Quote.author}</div>
+                {(quoteStatus === "loading")&&
+                     <Loading/>
+                 }
+                {(quoteStatus === "succeeded")&&
+                    <>
+                        <div id="text">
+                            <FaQuoteLeft/> 
+                            <span>{"   "}{quote.content}</span>
+                        </div>
+                        <div id="author">-{quote.author}</div>
+                    </>
+                }
+            
                 <div id="button-box">
                     <button id="new-quote" 
-                        onClick={() => randomQuote()}
+                        onClick={() => dispatch(fetchQuote())}  
                     >
-                        new quote
+                        New Quote
                     </button>
-                    <a id="tweet-quote" href='www.twitter.com/intent/tweet' target="_blank"><FaTwitter/></a>
+                    <a id="tweet-quote" 
+                        href={'https://twitter.com/intent/tweet?text=' +
+                        encodeURIComponent('"' + quote.content + '" ' + quote.author)}
+                        target="_blank" rel="noreferrer">
+                        <FaTwitter/>
+                    </a>
                 </div>
             </div>
             <div className='footer'>
-                 by: Bounaas meriem
+             by Meriem Bounaas
             </div>
         </>
-
     )
 }
 

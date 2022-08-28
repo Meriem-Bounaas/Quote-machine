@@ -1,19 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
-// import { useEffect } from 'react'
+import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit'
+import { BASE_URL } from '../../../config'
 
 export const QuoteSlice = createSlice({
-name: "quote",
-initialState: {
-    value: []
-},
-reducers:{
-    randomQuote: async state =>{
-        const response = await fetch('https://breaking-bad-quotes.herokuapp.com/v1/quotes')
-        const data = await response.json()
-        state.value = data[0]
-    }
-}
+    name: "quote",
+    initialState: {
+        value: {},
+        status: '',
+        error: null
+    },
+    reducers:{
+
+    },
+    extraReducers(builder) {
+        builder
+          .addCase(fetchQuote.pending, (state, action) => {
+            state.status = 'loading'
+          })
+          .addCase(fetchQuote.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.value = action.payload
+          })
+          .addCase(fetchQuote.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+          })
+      }
+
 })
 
-export const {randomQuote} = QuoteSlice.actions
+export const fetchQuote = createAsyncThunk('quote/fetchQuote', async () => {
+    const response =  await fetch(BASE_URL)
+    return response.json() 
+  })
+
+// export const {} = QuoteSlice.actions
 export default QuoteSlice.reducer
