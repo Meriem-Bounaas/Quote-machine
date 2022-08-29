@@ -1,3 +1,11 @@
+$breakPoints:(
+"phone":360px,
+"tablet": 768px,
+"desktop": 1366px,
+"LGdesktop": 1920px
+);
+
+
 .interface{
     background-color: palevioletred;
     display: flex;
@@ -12,15 +20,33 @@
         padding: 15px;
         margin-top: 20px;
         align-items: center;
+       @media (max-width:768px) {
+        width: 40%;
+        height: max-content;
+        justify-content: space-between;
+       }
         #text{
                 text-align: center;
                 width: 450px;
+                @media (max-width:768px) {
+                    width: 100%;
+                    height: max-content;
+                 }
             span{                
                 font-weight: 500;
                 font-size:x-large;
+                @media (max-width:768px) {
+                    width: 100%;
+                    // height: 100%;
+                    font-size:small;
+                    font-weight: 500;
+                }
             }
             svg{
                 color:palevioletred ;
+                @media (max-width:768px) {
+                    font-size: xx-small;;
+                }
             }
         }
         #author{
@@ -28,9 +54,21 @@
             font-size:small;
             text-align: right;
             padding-bottom: 10px;
+            @media (max-width:768px) {
+                padding-top: 5px;
+                font-size:xx-small;
+                padding-bottom: 5px;
+            }
         }
         #button-box{
             width: 450px;
+            @media (max-width:768px) {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: flex-end;
+                gap: 5px;
+            }
             #new-quote{
                 background-color: palevioletred;
                 float: right;
@@ -39,7 +77,12 @@
                 height: 38px;
                 width: 100px;
                 cursor: pointer;  
-                color: white;      
+                color: white;    
+                @media (max-width:768px) {
+                    width: 70px;
+                    height: 25px;
+                    font-size: x-small;
+                }  
             }
             
             #tweet-quote{
@@ -52,7 +95,13 @@
                 border: 1px solid palevioletred;
                 background-color: palevioletred;
                 cursor: pointer;    
-                border-radius: 3px;    
+                border-radius: 3px;
+                @media (max-width:768px) {
+                    height: 20px;
+                    width: 25px;
+                    padding-top: 3px;
+                    font-size: small;
+                }      
 
             }
         }
@@ -61,6 +110,9 @@
         text-align: center;
         color: white;
         margin-top: 10px;
+        @media (max-width:768px) {
+            font-size: x-small;
+        }
     }
     
 }
