@@ -33,5 +33,4 @@ export const fetchQuote = createAsyncThunk('quote/fetchQuote', async () => {
     return response.json() 
   })
 
-// export const {} = QuoteSlice.actions
 export default QuoteSlice.reducer
